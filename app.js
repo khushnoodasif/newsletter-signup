@@ -3,9 +3,8 @@ const bodyParser = require("body-parser");
 const request = require("request");
 const https = require("https");
 
-const apiKey = require("./api-key.json");
-
-apiKey.readFile
+const dotenv = require('dotenv')
+dotenv.config()
 
 const app = express();
 
@@ -30,7 +29,7 @@ app.post("/", function(req, res) {
    const url = "https://us20.api.mailchimp.com/3.0/lists/e6d92b7f7a"
    const options = {
       method: "POST",
-      auth: "khushnooasif:" + apiKey
+      auth: "khushnooasif:" + process.env.API_KEY
    }
 
    const request = https.request(url, options, function(response) {
@@ -56,6 +55,6 @@ app.post("/failure", function(req, res) {
    res.redirect("/");
 });
 
-app.listen(process.env.PORT, function () {
+app.listen(process.env.PORT || 3000, function () {
    console.log("Server started on port 3000");
 });
